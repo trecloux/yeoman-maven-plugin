@@ -52,10 +52,6 @@ Add the yeoman *dist* directory to the war file
         <configuration>
             <webResources>
                 <resource>
-                    <directory>src/main/webapp-filtered</directory>
-                    <filtering>true</filtering>
-                </resource>
-                <resource>
                     <directory>yo/dist</directory>
                 </resource>
             </webResources>
