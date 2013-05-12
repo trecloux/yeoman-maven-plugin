@@ -1,4 +1,4 @@
-package com.axonactive.yeoman;
+package com.github.trecloux.yeoman;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
