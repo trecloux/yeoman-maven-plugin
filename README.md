@@ -49,7 +49,8 @@ Add the yeoman *dist* directory to the war file
 
     <plugin>
         <artifactId>maven-war-plugin</artifactId>
-        <configuration>
+        <version>2.3</version>
+				<configuration>
             <webResources>
                 <resource>
                     <directory>yo/dist</directory>
