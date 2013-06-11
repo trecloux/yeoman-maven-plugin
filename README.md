@@ -73,7 +73,10 @@ Configure the clean plugin in order to delete generated directories
                     <directory>yo/.tmp</directory>
                 </fileset>
                 <fileset>
-                	<directory>app/components</directory>
+                	<directory>yo/app/components</directory>
+                </fileset>
+                <fileset>
+                  <directory>yo/node_modules</directory>
                 </fileset>
             </filesets>
         </configuration>
