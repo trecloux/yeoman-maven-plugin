@@ -41,22 +41,38 @@ public class YeomanMojo extends AbstractMojo {
     }
 
     private void npmInstall() throws MojoExecutionException {
-        executeCommand("npm install");
+        logToolVersion("node");
+        logToolVersion("npm");
+        logAndExecuteCommand("npm install");
     }
+
     private void bowerInstall() throws MojoExecutionException {
-        executeCommand("bower install --no-color");
+        logToolVersion("bower");
+        logAndExecuteCommand("bower install --no-color");
     }
     private void grunt() throws MojoExecutionException {
-        executeCommand("grunt --no-color");
+        logToolVersion("grunt");
+        logAndExecuteCommand("grunt --no-color");
     }
 
+    private void logToolVersion(final String toolName) throws MojoExecutionException {
+        getLog().info(toolName + " version :");
+        executeCommand(toolName + " --version");
+    }
 
+    private void logAndExecuteCommand(String command) throws MojoExecutionException {
+        logCommand(command);
+        executeCommand(command);
+    }
+
+    private void logCommand(String command) {
+        getLog().info("--------------------------------------");
+        getLog().info("         " + command.toUpperCase());
+        getLog().info("--------------------------------------");
+    }
 
     private void executeCommand(String command) throws MojoExecutionException {
         try {
-            getLog().info("--------------------------------------");
-            getLog().info("         " + command.toUpperCase());
-            getLog().info("--------------------------------------");
             if (isWindows()) {
                 command = "cmd /c " + command;
             }
@@ -68,6 +84,7 @@ public class YeomanMojo extends AbstractMojo {
             throw new MojoExecutionException("Error during : " + command, e);
         }
     }
+
 
     private boolean isWindows() {
         return osName.startsWith("Windows");
