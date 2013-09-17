@@ -33,6 +33,8 @@ public class YeomanMojo extends AbstractMojo {
     File yeomanProjectDirectory;
     @Parameter( defaultValue = "${os.name}", readonly = true)
     String osName;
+    @Parameter( property = "yo.test.skip", defaultValue = "false")
+    boolean skipTests;
 
     public void execute() throws MojoExecutionException {
         npmInstall();
@@ -52,7 +54,10 @@ public class YeomanMojo extends AbstractMojo {
     }
     private void grunt() throws MojoExecutionException {
         logToolVersion("grunt");
-        logAndExecuteCommand("grunt --no-color");
+        if (!skipTests) {
+            logAndExecuteCommand("grunt test --no-color");
+        }
+        logAndExecuteCommand("grunt build --no-color");
     }
 
     private void logToolVersion(final String toolName) throws MojoExecutionException {
