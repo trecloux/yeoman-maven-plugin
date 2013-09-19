@@ -36,47 +36,56 @@ public class YeomanMojo extends AbstractMojo {
     @Parameter( property = "yo.test.skip", defaultValue = "false")
     boolean skipTests;
 
+    @Parameter( defaultValue = "install", required = true )
+    String npmInstallArgs;
+    @Parameter( defaultValue = "install --no-color", required = true )
+    String bowerInstallArgs;
+    @Parameter( defaultValue = "test --no-color", required = true )
+    String gruntTestArgs;
+    @Parameter( defaultValue = "build --no-color", required = true )
+    String gruntInstallArgs;
+
     public void execute() throws MojoExecutionException {
         npmInstall();
         bowerInstall();
         grunt();
     }
 
-    private void npmInstall() throws MojoExecutionException {
+    void npmInstall() throws MojoExecutionException {
         logToolVersion("node");
         logToolVersion("npm");
-        logAndExecuteCommand("npm install");
+        logAndExecuteCommand("npm "+ npmInstallArgs);
     }
 
-    private void bowerInstall() throws MojoExecutionException {
+    void bowerInstall() throws MojoExecutionException {
         logToolVersion("bower");
-        logAndExecuteCommand("bower install --no-color");
+        logAndExecuteCommand("bower " + bowerInstallArgs);
     }
-    private void grunt() throws MojoExecutionException {
+    void grunt() throws MojoExecutionException {
         logToolVersion("grunt");
         if (!skipTests) {
-            logAndExecuteCommand("grunt test --no-color");
+            logAndExecuteCommand("grunt " + gruntTestArgs);
         }
-        logAndExecuteCommand("grunt build --no-color");
+        logAndExecuteCommand("grunt " + gruntInstallArgs);
     }
 
-    private void logToolVersion(final String toolName) throws MojoExecutionException {
+    void logToolVersion(final String toolName) throws MojoExecutionException {
         getLog().info(toolName + " version :");
         executeCommand(toolName + " --version");
     }
 
-    private void logAndExecuteCommand(String command) throws MojoExecutionException {
+    void logAndExecuteCommand(String command) throws MojoExecutionException {
         logCommand(command);
         executeCommand(command);
     }
 
-    private void logCommand(String command) {
+    void logCommand(String command) {
         getLog().info("--------------------------------------");
         getLog().info("         " + command.toUpperCase());
         getLog().info("--------------------------------------");
     }
 
-    private void executeCommand(String command) throws MojoExecutionException {
+    void executeCommand(String command) throws MojoExecutionException {
         try {
             if (isWindows()) {
                 command = "cmd /c " + command;
