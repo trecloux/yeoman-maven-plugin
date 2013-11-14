@@ -2,6 +2,7 @@ package com.github.trecloux.yeoman;
 
 import org.apache.maven.execution.DefaultMavenExecutionRequest;
 import org.apache.maven.execution.MavenExecutionRequest;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.ProjectBuilder;
@@ -9,6 +10,7 @@ import org.apache.maven.project.ProjectBuildingRequest;
 import org.mockito.ArgumentCaptor;
 
 import java.io.File;
+import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
@@ -37,18 +39,13 @@ public class YeomanMojoTest extends AbstractMojoTestCase {
         super.setUp();
     }
 
-    public void test_should_run_all_commands() throws Exception {
-        MavenProject project = getMavenProject("src/test/resources/test-mojo-pom.xml");
-
+    public void test_should_run_all_commands_with_default_configuration() throws Exception {
+        MavenProject project = getMavenProject("src/test/resources/test-mojo-default-pom.xml");
         YeomanMojo yeomanMojo = (YeomanMojo) lookupConfiguredMojo(project, "build");
 
-        YeomanMojo spy = spy(yeomanMojo);
-        ArgumentCaptor<String> commandsCaptor = ArgumentCaptor.forClass(String.class);
-        doNothing().when(spy).executeCommand(commandsCaptor.capture());
+        List<String> commands = executeMojoAndCaptureCommands(yeomanMojo);
 
-        spy.execute();
-
-        assertThat(commandsCaptor.getAllValues()).containsExactly(
+        assertThat(commands).containsExactly(
                 "node --version",
                 "npm --version",
                 "npm install",
@@ -58,6 +55,33 @@ public class YeomanMojoTest extends AbstractMojoTestCase {
                 "grunt test --no-color",
                 "grunt build --no-color"
         );
+    }
+
+
+    public void test_should_run_all_commands_with_custom_args() throws Exception {
+        YeomanMojo yeomanMojo = (YeomanMojo) lookupMojo("build", "src/test/resources/test-mojo-configuration-pom.xml");
+
+        List<String> commands = executeMojoAndCaptureCommands(yeomanMojo);
+
+        assertThat(commands).containsExactly(
+                "node --version",
+                "npm --version",
+                "npm arg1",
+                "bower --version",
+                "bower arg2",
+                "grunt --version",
+                "grunt arg3",
+                "grunt arg4"
+        );
+    }
+
+    private List<String> executeMojoAndCaptureCommands(YeomanMojo yeomanMojo) throws MojoExecutionException {
+        YeomanMojo spy = spy(yeomanMojo);
+        ArgumentCaptor<String> commandsCaptor = ArgumentCaptor.forClass(String.class);
+        doNothing().when(spy).executeCommand(commandsCaptor.capture());
+
+        spy.execute();
+        return commandsCaptor.getAllValues();
     }
 
     private MavenProject getMavenProject(String pomPath) throws Exception {
