@@ -43,7 +43,7 @@ public class YeomanMojo extends AbstractMojo {
     @Parameter( defaultValue = "test --no-color", required = true )
     String gruntTestArgs;
     @Parameter( defaultValue = "build --no-color", required = true )
-    String gruntInstallArgs;
+    String gruntBuildArgs;
 
     public void execute() throws MojoExecutionException {
         npmInstall();
@@ -66,7 +66,7 @@ public class YeomanMojo extends AbstractMojo {
         if (!skipTests) {
             logAndExecuteCommand("grunt " + gruntTestArgs);
         }
-        logAndExecuteCommand("grunt " + gruntInstallArgs);
+        logAndExecuteCommand("grunt " + gruntBuildArgs);
     }
 
     void logToolVersion(final String toolName) throws MojoExecutionException {
@@ -103,4 +103,6 @@ public class YeomanMojo extends AbstractMojo {
     private boolean isWindows() {
         return osName.startsWith("Windows");
     }
+
+
 }
