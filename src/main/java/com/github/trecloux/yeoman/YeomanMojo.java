@@ -35,6 +35,8 @@ public class YeomanMojo extends AbstractMojo {
     String osName;
     @Parameter( property = "yo.test.skip", defaultValue = "false")
     boolean skipTests;
+    @Parameter( property = "yo.skip", defaultValue = "false")
+    boolean skip;
 
     @Parameter( defaultValue = "install", required = true )
     String npmInstallArgs;
@@ -46,9 +48,13 @@ public class YeomanMojo extends AbstractMojo {
     String gruntBuildArgs;
 
     public void execute() throws MojoExecutionException {
-        npmInstall();
-        bowerInstall();
-        grunt();
+        if (skip) {
+            getLog().info("Skipping Yeoman Execution");
+        } else {
+            npmInstall();
+            bowerInstall();
+            grunt();
+        }
     }
 
     void npmInstall() throws MojoExecutionException {
