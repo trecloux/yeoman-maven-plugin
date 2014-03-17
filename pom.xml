@@ -8,7 +8,7 @@
 
     <groupId>com.github.trecloux</groupId>
     <artifactId>yeoman-maven-plugin</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
     <packaging>maven-plugin</packaging>
     <name>Yeoman Maven Plugin</name>
 
