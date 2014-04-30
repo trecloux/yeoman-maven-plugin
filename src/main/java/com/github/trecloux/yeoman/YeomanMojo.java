@@ -44,10 +44,12 @@ public class YeomanMojo extends AbstractMojo {
     String npmInstallArgs;
     @Parameter( defaultValue = "install --no-color", required = true )
     String bowerInstallArgs;
+    @Parameter( defaultValue = "grunt", required = true )
+    String buildTool;
     @Parameter( defaultValue = "test --no-color", required = true )
-    String gruntTestArgs;
+    String testArgs;
     @Parameter( defaultValue = "build --no-color", required = true )
-    String gruntBuildArgs;
+    String buildArgs;
 
     public void execute() throws MojoExecutionException {
         if (skip) {
@@ -55,7 +57,7 @@ public class YeomanMojo extends AbstractMojo {
         } else {
             npmInstall();
             bowerInstall();
-            grunt();
+            build();
         }
     }
 
@@ -69,13 +71,13 @@ public class YeomanMojo extends AbstractMojo {
         logToolVersion("bower");
         logAndExecuteCommand("bower " + bowerInstallArgs);
     }
-    void grunt() throws MojoExecutionException {
-        logToolVersion("grunt");
+    void build() throws MojoExecutionException {
+        logToolVersion(buildTool);
         if (!skipTests) {
-            logAndExecuteCommand("grunt " + gruntTestArgs);
+            logAndExecuteCommand(buildTool + " " + testArgs);
         }
         if(!skipBuild) {
-            logAndExecuteCommand("grunt " + gruntBuildArgs);
+            logAndExecuteCommand(buildTool + " " + buildArgs);
         }
     }
 

@@ -12,8 +12,9 @@
                 <configuration>
                     <npmInstallArgs>arg1</npmInstallArgs>
                     <bowerInstallArgs>arg2</bowerInstallArgs>
-                    <gruntTestArgs>arg3</gruntTestArgs>
-                    <gruntBuildArgs>arg4</gruntBuildArgs>
+                    <buildTool>grunt</buildTool>
+                    <testArgs>arg3</testArgs>
+                    <buildArgs>arg4</buildArgs>
                 </configuration>
             </plugin>
         </plugins>
