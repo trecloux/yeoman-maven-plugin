@@ -33,6 +33,8 @@ public class YeomanMojo extends AbstractMojo {
     File yeomanProjectDirectory;
     @Parameter( defaultValue = "${os.name}", readonly = true)
     String osName;
+    @Parameter( property = "yo.build.skip", defaultValue = "false")
+    boolean skipBuild;
     @Parameter( property = "yo.test.skip", defaultValue = "false")
     boolean skipTests;
     @Parameter( property = "yo.skip", defaultValue = "false")
@@ -72,7 +74,9 @@ public class YeomanMojo extends AbstractMojo {
         if (!skipTests) {
             logAndExecuteCommand("grunt " + gruntTestArgs);
         }
-        logAndExecuteCommand("grunt " + gruntBuildArgs);
+        if(!skipBuild) {
+            logAndExecuteCommand("grunt " + gruntBuildArgs);
+        }
     }
 
     void logToolVersion(final String toolName) throws MojoExecutionException {
