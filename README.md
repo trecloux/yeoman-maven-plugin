@@ -35,7 +35,7 @@ Plugin declaration :
 	<plugin>	
    		<groupId>com.github.trecloux</groupId>
    	    <artifactId>yeoman-maven-plugin</artifactId>
-   	    <version>0.1</version>
+   	    <version>0.2</version>
    	    <executions>
    	    	<execution>
    	        	<goals>
