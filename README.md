@@ -1,6 +1,9 @@
 #yeoman-maven-plugin
 
 Use this plugin to integrate the yeoman build into your maven build.
+## Prerequisites
+* npm, bower, grunt 
+* maven 3
 
 ## Launched commands
 * npm install
