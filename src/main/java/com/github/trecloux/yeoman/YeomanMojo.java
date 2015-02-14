@@ -51,13 +51,30 @@ public class YeomanMojo extends AbstractMojo {
     @Parameter( defaultValue = "build --no-color", required = true )
     String buildArgs;
 
+    @Deprecated
+    @Parameter(required = false)
+    String gruntTestArgs;
+    @Deprecated
+    @Parameter(required = false)
+    String gruntBuildArgs;
+
     public void execute() throws MojoExecutionException {
+        handleDeprecatedParameters();
         if (skip) {
             getLog().info("Skipping Yeoman Execution");
         } else {
             npmInstall();
             bowerInstall();
             build();
+        }
+    }
+
+    private void handleDeprecatedParameters() {
+        if (gruntTestArgs != null) {
+            testArgs = gruntTestArgs;
+        }
+        if (gruntBuildArgs != null) {
+            buildArgs = gruntBuildArgs;
         }
     }
 

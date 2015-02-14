@@ -110,6 +110,26 @@ public class YeomanMojoTest extends AbstractMojoTestCase {
         );
     }
 
+    public void test_should_configure_using_deprecated_parameters() throws Exception {
+        MavenProject project = getMavenProject("src/test/resources/test-mojo-default-pom.xml");
+        YeomanMojo yeomanMojo = (YeomanMojo) lookupConfiguredMojo(project, "build");
+        yeomanMojo.gruntTestArgs = "arg3";
+        yeomanMojo.gruntBuildArgs = "arg4";
+
+        List<String> commands = executeMojoAndCaptureCommands(yeomanMojo);
+
+        assertThat(commands).containsExactly(
+                "node --version",
+                "npm --version",
+                "npm install",
+                "bower --version",
+                "bower install --no-color",
+                "grunt --version",
+                "grunt arg3",
+                "grunt arg4"
+        );
+    }
+
     private List<String> executeMojoAndCaptureCommands(YeomanMojo yeomanMojo) throws MojoExecutionException {
         YeomanMojo spy = spy(yeomanMojo);
         ArgumentCaptor<String> commandsCaptor = ArgumentCaptor.forClass(String.class);
