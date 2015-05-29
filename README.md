@@ -8,7 +8,7 @@ Use this plugin to integrate the yeoman build into your maven build.
 ## Launched commands (default setup)
 * `npm install`
 * `bower install --no-color`
-* `grunt test test --no-color`
+* `grunt test --no-color`
 * `grunt build --no-color`
 
 ## Default layout
