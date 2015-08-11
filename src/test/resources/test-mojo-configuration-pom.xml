@@ -15,6 +15,7 @@
                     <buildTool>grunt</buildTool>
                     <testArgs>arg3</testArgs>
                     <buildArgs>arg4</buildArgs>
+                    <bowerVariant>bower-art</bowerVariant>
                 </configuration>
             </plugin>
         </plugins>
