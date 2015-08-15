@@ -102,8 +102,8 @@ public class YeomanMojoTest extends AbstractMojoTestCase {
                 "node --version",
                 "npm --version",
                 "npm arg1",
-                "bower --version",
-                "bower arg2",
+                "bower-art --version",
+                "bower-art arg2",
                 "grunt --version",
                 "grunt arg3",
                 "grunt arg4"
