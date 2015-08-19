@@ -95,7 +95,7 @@ var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
 <plugin>    
     <groupId>com.github.trecloux</groupId>
     <artifactId>yeoman-maven-plugin</artifactId>
-    <version>0.1</version>
+    <version>0.5</version>
     <executions>
         <execution>
             <goals>

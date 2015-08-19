@@ -39,7 +39,7 @@ Plugin declaration :
 	<plugin>	
    		<groupId>com.github.trecloux</groupId>
    	    <artifactId>yeoman-maven-plugin</artifactId>
-   	    <version>0.4</version>
+   	    <version>0.5</version>
    	    <executions>
    	    	<execution>
    	        	<goals>
@@ -88,6 +88,9 @@ Configure the clean plugin in order to delete generated directories
     </plugin>
     
 ## Changelog
+
+### V0.5 2015-08-19
+* Add `bowerVariant` parameter to be able to use an alternative to *bower* : *bower-act* (Thanks [Thorsten Pohl ](https://github.com/tpohl))
 
 ### V0.4 2015-02-15
 * Add `buildTool` parameter to be able to use an alternative to *grunt* : *gulp* the `gruntTestArgs` and `gruntInstallArgs` were renamed to `testArgs` and `buildArgs`. Previous parameters are still usable but deprecated (Thanks [Lukas Peleska](https://github.com/derLukers))
