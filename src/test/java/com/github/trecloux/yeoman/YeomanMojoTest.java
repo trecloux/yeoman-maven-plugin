@@ -56,7 +56,7 @@ public class YeomanMojoTest extends AbstractMojoTestCase {
                 "grunt build --no-color"
         );
     }
-    
+
     public void test_should_skip_build_when_flag_set() throws Exception {
         MavenProject project = getMavenProject("src/test/resources/test-mojo-default-pom.xml");
         YeomanMojo yeomanMojo = (YeomanMojo) lookupConfiguredMojo(project, "build");
@@ -72,6 +72,39 @@ public class YeomanMojoTest extends AbstractMojoTestCase {
                 "bower install --no-color",
                 "grunt --version",
                 "grunt test --no-color"
+        );
+    }
+
+    public void test_should_skip_npm_install_when_flag_set() throws Exception {
+        MavenProject project = getMavenProject("src/test/resources/test-mojo-default-pom.xml");
+        YeomanMojo yeomanMojo = (YeomanMojo) lookupConfiguredMojo(project, "build");
+        yeomanMojo.skipNpmInstall = true;
+
+        List<String> commands = executeMojoAndCaptureCommands(yeomanMojo);
+
+        assertThat(commands).containsExactly(
+                "bower --version",
+                "bower install --no-color",
+                "grunt --version",
+                "grunt test --no-color",
+                "grunt build --no-color"
+        );
+    }
+
+    public void test_should_skip_bower_install_when_flag_set() throws Exception {
+        MavenProject project = getMavenProject("src/test/resources/test-mojo-default-pom.xml");
+        YeomanMojo yeomanMojo = (YeomanMojo) lookupConfiguredMojo(project, "build");
+        yeomanMojo.skipBowerInstall = true;
+
+        List<String> commands = executeMojoAndCaptureCommands(yeomanMojo);
+
+        assertThat(commands).containsExactly(
+                "node --version",
+                "npm --version",
+                "npm install",
+                "grunt --version",
+                "grunt test --no-color",
+                "grunt build --no-color"
         );
     }
 
