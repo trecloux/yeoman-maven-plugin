@@ -1,5 +1,12 @@
 package com.github.trecloux.yeoman;
 
+import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.spy;
+
+import java.io.File;
+import java.util.List;
+
 import org.apache.maven.execution.DefaultMavenExecutionRequest;
 import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -8,13 +15,6 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.ProjectBuilder;
 import org.apache.maven.project.ProjectBuildingRequest;
 import org.mockito.ArgumentCaptor;
-
-import java.io.File;
-import java.util.List;
-
-import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.spy;
 
 /*
  * Copyright 2013 Thomas Recloux
@@ -157,6 +157,23 @@ public class YeomanMojoTest extends AbstractMojoTestCase {
                 "npm install",
                 "bower --version",
                 "bower install --no-color",
+                "grunt --version",
+                "grunt arg3",
+                "grunt arg4"
+        );
+    }
+    
+    public void test_should_use_npm_cache() throws Exception {
+    	YeomanMojo yeomanMojo = (YeomanMojo) lookupMojo("build", "src/test/resources/test-mojo-with-npm-cache-pom.xml");
+
+        List<String> commands = executeMojoAndCaptureCommands(yeomanMojo);
+
+        assertThat(commands).containsExactly(
+                "node --version",
+                "npm --version",
+                "npm-cache arg1",
+                "bower-art --version",
+                "bower-art arg2",
                 "grunt --version",
                 "grunt arg3",
                 "grunt arg4"
