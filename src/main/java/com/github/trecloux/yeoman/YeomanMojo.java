@@ -39,6 +39,10 @@ public class YeomanMojo extends AbstractMojo {
     boolean skipTests;
     @Parameter( property = "yo.skip", defaultValue = "false")
     boolean skip;
+    @Parameter( property = "npm.install.skip", defaultValue = "false" )
+    boolean skipNpmInstall;
+    @Parameter( property = "bower.install.skip", defaultValue = "false" )
+    boolean skipBowerInstall;
 
     @Parameter( defaultValue = "install", required = true )
     String npmInstallArgs;
@@ -81,14 +85,22 @@ public class YeomanMojo extends AbstractMojo {
     }
 
     void npmInstall() throws MojoExecutionException {
-        logToolVersion("node");
-        logToolVersion("npm");
-        logAndExecuteCommand("npm "+ npmInstallArgs);
+        if (skipNpmInstall) {
+            getLog().info("Skipping 'npm install' Execution");
+        } else {
+            logToolVersion("node");
+            logToolVersion("npm");
+            logAndExecuteCommand("npm " + npmInstallArgs);
+        }
     }
 
     void bowerInstall() throws MojoExecutionException {
-        logToolVersion(bowerVariant);
-        logAndExecuteCommand(bowerVariant+ " " + bowerInstallArgs);
+        if (skipBowerInstall) {
+            getLog().info("Skipping 'bower install' Execution");
+        } else {
+            logToolVersion(bowerVariant);
+            logAndExecuteCommand(bowerVariant + " " + bowerInstallArgs);
+        }
     }
     void build() throws MojoExecutionException {
         logToolVersion(buildTool);
