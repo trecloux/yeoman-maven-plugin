@@ -44,6 +44,9 @@ public class YeomanMojo extends AbstractMojo {
     @Parameter( property = "bower.install.skip", defaultValue = "false" )
     boolean skipBowerInstall;
 
+    @Parameter(defaultValue = "false", required = false)
+    boolean useNpmCache;
+
     @Parameter( defaultValue = "install", required = true )
     String npmInstallArgs;
     @Parameter(defaultValue = "bower",  required = true )
@@ -90,7 +93,7 @@ public class YeomanMojo extends AbstractMojo {
         } else {
             logToolVersion("node");
             logToolVersion("npm");
-            logAndExecuteCommand("npm " + npmInstallArgs);
+            logAndExecuteCommand(getNpmExecutor() + npmInstallArgs);
         }
     }
 
@@ -102,6 +105,7 @@ public class YeomanMojo extends AbstractMojo {
             logAndExecuteCommand(bowerVariant + " " + bowerInstallArgs);
         }
     }
+
     void build() throws MojoExecutionException {
         logToolVersion(buildTool);
         if (!skipTests) {
@@ -142,6 +146,16 @@ public class YeomanMojo extends AbstractMojo {
         }
     }
 
+
+    private String getNpmExecutor() {
+    	String npmExecutor = "npm ";
+
+    	if(useNpmCache) {
+    		npmExecutor = "npm-cache ";
+    	}
+
+		return npmExecutor;
+	}
 
     private boolean isWindows() {
         return osName.startsWith("Windows");

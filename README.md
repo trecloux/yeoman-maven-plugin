@@ -2,7 +2,7 @@
 
 Use this plugin to integrate the yeoman build into your maven build.
 ## Prerequisites
-* npm, bower, grunt 
+* npm, bower, grunt and npm-cache(only needed if useNpmCache parameter enabled)
 * maven 3
 
 ## Launched commands (default setup)
@@ -36,7 +36,7 @@ Yeoman application is placed into the *yo* directory at the top of the project h
 ## Usage
 Plugin declaration :
 
-	<plugin>	
+	<plugin>
    		<groupId>com.github.trecloux</groupId>
    	    <artifactId>yeoman-maven-plugin</artifactId>
    	    <version>0.5</version>
@@ -86,7 +86,7 @@ Configure the clean plugin in order to delete generated directories
             </filesets>
         </configuration>
     </plugin>
-    
+
 ## Changelog
 
 ### V0.5 2015-08-19
@@ -105,7 +105,7 @@ Configure the clean plugin in order to delete generated directories
 * Rename `gruntInstallArgs` parameter to `gruntBuildArgs`
 * Logging executed commands
 * Add `skip` parameter to skip the plugin execution (`yo.skip` system property) to skip the build (Thanks [Brad Sneade](https://github.com/bsneade))
-* Add new parameters : 
+* Add new parameters :
   * `npmInstallArgs` for npm arguments(default value : `install`)
   * `bowerInstallArgs` for bower arguments (default value : `install --no-color`)
   * `gruntTestArgs` for grunt build arguments (default value : `test --no-color`)
@@ -113,14 +113,6 @@ Configure the clean plugin in order to delete generated directories
 
 ### V0.1 2013-04-25
 * Initial version
-    
+
 ## License
 This project is licensed under [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html)
-
-
-
-	     
-	     
-	     
-
-
